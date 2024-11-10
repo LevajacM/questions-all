@@ -1,24 +1,33 @@
-import { useState } from 'react';
 import { FaPlus, FaMinus } from 'react-icons/fa6';
 
-export const Question = ({ title, info }) => {
-  const [answer, showAnswer] = useState(false);
+export const Question = ({
+  id,
+  title,
+  info,
+  currentId,
+  showCurrentQuestion,
+}) => {
+  const isActive = id === currentId;
 
   return (
     <article className='question'>
       <header>
         <h5>{title}</h5>
-        {!answer ? (
-          <button className='question-btn' onClick={() => showAnswer(!answer)}>
-            <FaPlus />
-          </button>
-        ) : (
-          <button className='question-btn' onClick={() => showAnswer(!answer)}>
-            <FaMinus />
-          </button>
-        )}
+
+        <button
+          className='question-btn'
+          onClick={() => {
+            // if (isActive) {
+            //   showCurrentQuestion(null);
+            //   return;
+            // }
+            showCurrentQuestion(id);
+          }}
+        >
+          {isActive ? <FaMinus /> : <FaPlus />}
+        </button>
       </header>
-      {answer && <p>{info}</p>}
+      {isActive && <p>{info}</p>}
     </article>
   );
 };
